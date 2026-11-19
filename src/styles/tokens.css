@@ -1,0 +1,34 @@
+:root {
+  --bg: #0F1011;
+  --surface: #17181A;
+  --media: #131416;
+  --line: #222428;
+  --line-strong: #2A2C30;
+  --line-soft: #1E2023;
+  --tag-border: #34363B;
+  --text: #E2DDD4;
+  --text-hover: #EEE9E1;
+  --text-article: #C9CCD1;
+  --text-body: #A3A8B0;
+  --text-muted: #8A8F98;
+  --text-tag: #C4C8CE;
+  --display: #B9B2A6;
+  --quote-bar: #3A3C41;
+  --mark: #4A4D52;
+  --accent: #F0A43A;
+  --code-text: #D6D9DE;
+
+  --font-sans: 'Schibsted Grotesk', system-ui, sans-serif;
+  --font-mono: 'IBM Plex Mono', ui-monospace, monospace;
+  --font-math: 'STIX Two Text', 'Times New Roman', serif;
+
+  --radius-tag: 3px;
+  --radius-chip: 4px;
+  --radius-button: 8px;
+  --radius-card: 10px;
+
+  --page-max: 1360px;
+  --gutter: 24px;
+
+  color-scheme: dark;
+}

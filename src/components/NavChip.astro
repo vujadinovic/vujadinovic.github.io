@@ -1,0 +1,51 @@
+---
+interface Props {
+  href: string;
+  shortcut: string;
+  label: string;
+  active?: boolean;
+}
+
+const { href, shortcut, label, active = false } = Astro.props;
+---
+<a class:list={['chip', { active }]} href={href} data-key={shortcut} aria-current={active ? 'page' : undefined}>
+  <span class="chip-key" aria-hidden="true">[{shortcut}]</span>{label}
+</a>
+
+<style>
+  .chip {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    min-height: 32px;
+    padding: 0 10px;
+    border-radius: var(--radius-chip);
+    background: var(--surface);
+    color: var(--text-body);
+    font-family: var(--font-mono);
+    font-size: 13px;
+    white-space: nowrap;
+  }
+
+  .chip:hover {
+    color: var(--text);
+  }
+
+  .chip:focus-visible {
+    border-radius: var(--radius-chip);
+  }
+
+  .chip-key {
+    color: var(--accent);
+  }
+
+  .chip.active,
+  .chip.active:hover {
+    background: var(--text);
+    color: var(--bg);
+  }
+
+  .chip.active .chip-key {
+    color: inherit;
+  }
+</style>

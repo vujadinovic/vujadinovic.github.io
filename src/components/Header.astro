@@ -1,0 +1,85 @@
+---
+import Logo from './Logo.astro';
+import NavChip from './NavChip.astro';
+import { getSite } from '../lib/site';
+
+const site = await getSite();
+const path = Astro.url.pathname;
+const section = path.startsWith('/projects') ? 'projects' : path.startsWith('/blog') ? 'blog' : path === '/' ? 'about' : '';
+---
+<header class="site-header">
+  <nav aria-label="Main" class="nav">
+    <div class="nav-logo">
+      <Logo />
+    </div>
+    <div class="nav-pages">
+      <NavChip href="/" shortcut="a" label="about" active={section === 'about'} />
+      <NavChip href="/projects/" shortcut="p" label="projects & research" active={section === 'projects'} />
+      <NavChip href="/blog/" shortcut="b" label="blog" active={section === 'blog'} />
+    </div>
+    <div class="nav-external">
+      <NavChip href={site.github} shortcut="g" label="github" />
+      <NavChip href={site.cv} shortcut="c" label="cv" />
+    </div>
+  </nav>
+</header>
+
+<style>
+  .site-header {
+    padding: 10px var(--gutter);
+    border-bottom: 1px solid var(--line);
+  }
+
+  .nav {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .nav-logo {
+    flex: 1 1 0;
+    min-width: 0;
+    display: flex;
+  }
+
+  .nav-pages {
+    flex: 0 1 auto;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 4px;
+  }
+
+  .nav-external {
+    flex: 1 1 0;
+    min-width: 0;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: flex-end;
+    gap: 4px;
+  }
+
+  @media (max-width: 640px) {
+    .nav {
+      display: grid;
+      grid-template-columns: auto 1fr;
+      grid-template-areas:
+        'logo external'
+        'pages pages';
+      row-gap: 10px;
+      column-gap: 8px;
+    }
+
+    .nav-logo {
+      grid-area: logo;
+    }
+
+    .nav-external {
+      grid-area: external;
+    }
+
+    .nav-pages {
+      grid-area: pages;
+    }
+  }
+</style>

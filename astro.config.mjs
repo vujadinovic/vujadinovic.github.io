@@ -9,6 +9,7 @@ import remarkFigures from './src/lib/remark-figures.mjs';
 export default defineConfig({
   site: 'https://vujadinovic.github.io',
   trailingSlash: 'ignore',
+  devToolbar: { enabled: false },
   integrations: [mdx(), sitemap()],
   markdown: {
     processor: unified({

@@ -1,0 +1,55 @@
+---
+import { getSite, isUrl } from '../lib/site';
+
+interface Props {
+  rss?: boolean;
+}
+
+const { rss = false } = Astro.props;
+const site = await getSite();
+const city = site.location.split(',')[0].trim();
+---
+<footer class="site-footer">
+  <div class="footer-inner">
+    <span>{site.name.toLowerCase()}, {city.toLowerCase()}</span>
+    <div class="footer-links">
+      <a href={`mailto:${site.email}`}>email</a>
+      <a href={site.github}>github</a>
+      {isUrl(site.linkedin) && <a href={site.linkedin}>linkedin</a>}
+      {rss && <a href="/rss.xml">rss</a>}
+    </div>
+  </div>
+</footer>
+
+<style>
+  .site-footer {
+    border-top: 1px solid var(--line);
+  }
+
+  .footer-inner {
+    max-width: calc(var(--page-max) + 2 * var(--gutter));
+    margin: 0 auto;
+    padding: 28px var(--gutter) 36px;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    gap: 16px;
+    font-family: var(--font-mono);
+    font-size: 13px;
+    color: var(--text-muted);
+  }
+
+  .footer-links {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+  }
+
+  .footer-links a {
+    color: var(--text-muted);
+  }
+
+  .footer-links a:hover {
+    color: var(--text);
+  }
+</style>
