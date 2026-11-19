@@ -1,13 +1,171 @@
 ---
-import { getCollection } from 'astro:content';
-const counts = await Promise.all(
-  (['site', 'about', 'pages', 'projects', 'blog'] as const).map(async (c) => `${c}: ${(await getCollection(c)).length}`),
-);
+import { Image } from 'astro:assets';
+import { getEntry, render } from 'astro:content';
+import Base from '../layouts/Base.astro';
+import PageHero from '../components/PageHero.astro';
+import SectionLabel from '../components/SectionLabel.astro';
+import MetaTable from '../components/MetaTable.astro';
+import MetaRow from '../components/MetaRow.astro';
+import Tag from '../components/Tag.astro';
+import Entry from '../components/Entry.astro';
+import { getSite, isUrl } from '../lib/site';
+import { image } from '../lib/images';
+
+const site = await getSite();
+const about = await getEntry('about', 'about');
+if (!about) throw new Error('src/content/about.md is missing');
+const { Content } = await render(about);
+const data = about.data;
+
+const entryGroups = [
+  { label: 'experience', items: data.experience },
+  { label: 'education', items: data.education },
+  { label: 'activities', items: data.activities },
+  { label: 'talks and writing', items: site.show_talks ? data.talks : [] },
+].filter((group) => group.items.length > 0);
 ---
-<html lang="en">
-  <head>
-    <meta charset="utf-8" />
-    <title>Stefan Vujadinović</title>
-  </head>
-  <body><pre>{counts.join('\n')}</pre></body>
-</html>
+<Base description={data.subtitle}>
+  <PageHero title={data.title} subtitle={data.subtitle} />
+  <div class="columns">
+    <aside class="side">
+      <Image
+        class="portrait"
+        src={image(data.photo)}
+        alt={data.photo_alt}
+        widths={[440, 880]}
+        sizes="(max-width: 480px) calc(100vw - 48px), 440px"
+        loading="eager"
+        fetchpriority="high"
+      />
+      <MetaTable>
+        <MetaRow label="name">{data.metadata.name}</MetaRow>
+        <MetaRow label="based in">{data.metadata.based_in}</MetaRow>
+        <MetaRow label="interested in">
+          {data.metadata.interested_in.map((item) => <Tag>{item}</Tag>)}
+        </MetaRow>
+        <MetaRow label="currently">{data.metadata.currently}</MetaRow>
+        <MetaRow label="contact">
+          <Tag href={`mailto:${site.email}`}>email</Tag>
+          {isUrl(site.linkedin) && <Tag href={site.linkedin}>linkedin</Tag>}
+          <Tag href={site.github}>github</Tag>
+        </MetaRow>
+      </MetaTable>
+    </aside>
+    <div class="main">
+      <section class="bio">
+        <SectionLabel label="bio" as="h2" />
+        <p class="lead">{data.lead}</p>
+        <div class="bio-body">
+          <Content />
+        </div>
+      </section>
+      {entryGroups.map((group) => (
+        <section class="block">
+          <SectionLabel label={group.label} as="h2" />
+          <div class="entries">
+            {group.items.map((item) => <Entry {...item} />)}
+          </div>
+        </section>
+      ))}
+      {data.tools.length > 0 && (
+        <section class="block">
+          <SectionLabel label="tools" as="h2" />
+          <div class="tags">
+            {data.tools.map((tool) => <Tag>{tool}</Tag>)}
+          </div>
+        </section>
+      )}
+      {data.outside_work && (
+        <section class="block">
+          <SectionLabel label="outside work" as="h2" />
+          <p class="outside">{data.outside_work}</p>
+        </section>
+      )}
+    </div>
+  </div>
+</Base>
+
+<style>
+  .columns {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 48px 72px;
+    align-items: flex-start;
+  }
+
+  .side {
+    flex: 1 1 340px;
+    max-width: 440px;
+    min-width: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 28px;
+  }
+
+  .portrait {
+    box-sizing: content-box;
+    width: 100%;
+    height: auto;
+    aspect-ratio: 4 / 5;
+    object-fit: cover;
+    border-radius: var(--radius-card);
+    border: 1px solid var(--line);
+  }
+
+  .main {
+    flex: 999 1 520px;
+    min-width: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 48px;
+  }
+
+  .bio {
+    display: flex;
+    flex-direction: column;
+    gap: 22px;
+  }
+
+  .lead {
+    font-size: 20px;
+    line-height: 1.5;
+    max-width: 58ch;
+  }
+
+  .bio-body {
+    display: flex;
+    flex-direction: column;
+    gap: 22px;
+  }
+
+  .bio-body :global(p) {
+    font-size: 18px;
+    line-height: 1.65;
+    color: var(--text-body);
+    max-width: 62ch;
+  }
+
+  .block {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+  }
+
+  .entries {
+    display: flex;
+    flex-direction: column;
+    gap: 22px;
+  }
+
+  .tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+  }
+
+  .outside {
+    font-size: 16px;
+    line-height: 1.65;
+    color: var(--text-body);
+  }
+</style>

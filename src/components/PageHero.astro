@@ -1,0 +1,71 @@
+---
+interface Props {
+  title: string;
+  subtitle?: string;
+  size?: 'page' | 'post';
+}
+
+const { title, subtitle, size = 'page' } = Astro.props;
+const marks = ['0%', '62%', '86%', '100%'];
+---
+<div class:list={['hero', size]}>
+  {['top', 'bottom'].map((edge) =>
+    marks.map((left) => (
+      <span class:list={['mark', edge, { end: left === '100%' }]} style={left === '100%' ? undefined : `left: ${left}`} aria-hidden="true">+</span>
+    )),
+  )}
+  <h1>{title}</h1>
+  {subtitle && <p class="subtitle">{subtitle}</p>}
+</div>
+
+<style>
+  .hero {
+    position: relative;
+    padding: 36px 0 40px;
+    margin-bottom: 56px;
+  }
+
+  .mark {
+    position: absolute;
+    font-family: var(--font-mono);
+    font-size: 15px;
+    line-height: 1;
+    color: var(--mark);
+  }
+
+  .mark.top {
+    top: 0;
+  }
+
+  .mark.bottom {
+    bottom: 0;
+  }
+
+  .mark.end {
+    right: 0;
+  }
+
+  h1 {
+    margin: 0 0 0 -0.04em;
+    font-size: clamp(64px, 10.5vw, 164px);
+    line-height: 0.95;
+    font-weight: 500;
+    letter-spacing: -0.05em;
+    color: var(--display);
+    max-width: 11ch;
+    overflow-wrap: break-word;
+  }
+
+  .post h1 {
+    font-size: clamp(52px, 8vw, 124px);
+    max-width: 16ch;
+  }
+
+  .subtitle {
+    margin-top: 24px;
+    max-width: 560px;
+    font-size: 17px;
+    line-height: 1.55;
+    color: var(--text-body);
+  }
+</style>

@@ -1,0 +1,21 @@
+---
+import SectionLabel from './SectionLabel.astro';
+
+interface Props {
+  label?: string;
+}
+
+const { label = 'metadata' } = Astro.props;
+---
+<div class="meta-table">
+  <SectionLabel label={label} />
+  <dl>
+    <slot />
+  </dl>
+</div>
+
+<style>
+  dl {
+    margin: 0;
+  }
+</style>

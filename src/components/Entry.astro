@@ -1,0 +1,58 @@
+---
+interface Props {
+  role: string;
+  org: string;
+  when: string;
+  text?: string;
+}
+
+const { role, org, when, text } = Astro.props;
+---
+<div class="entry">
+  <div class="entry-head">
+    <h3>{role} <span class="org">at {org}</span></h3>
+    <span class="when">{when}</span>
+  </div>
+  {text && <p>{text}</p>}
+</div>
+
+<style>
+  .entry {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+  }
+
+  .entry-head {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    align-items: baseline;
+    gap: 4px 16px;
+  }
+
+  h3 {
+    font-size: 17px;
+    line-height: 1.4;
+    font-weight: 600;
+    color: var(--text);
+  }
+
+  .org {
+    font-weight: 400;
+    color: var(--text-body);
+  }
+
+  .when {
+    font-family: var(--font-mono);
+    font-size: 13px;
+    color: var(--text-muted);
+  }
+
+  p {
+    font-size: 15px;
+    line-height: 1.6;
+    color: var(--text-body);
+    max-width: 62ch;
+  }
+</style>

@@ -1,0 +1,35 @@
+---
+import { illustration } from '../lib/illustrations';
+
+interface Props {
+  name: string;
+  height: number;
+  padding?: number;
+  variant?: 'panel' | 'card';
+}
+
+const { name, height, padding = 10, variant = 'panel' } = Astro.props;
+const svg = illustration(name);
+---
+<div class:list={['illustration', variant]} style={`height: ${height}px; padding: ${padding}px`} set:html={svg} />
+
+<style>
+  .illustration {
+    background: var(--media);
+  }
+
+  .panel {
+    border: 1px solid var(--line);
+    border-radius: var(--radius-card);
+  }
+
+  .card {
+    border-bottom: 1px solid var(--line-soft);
+  }
+
+  .illustration :global(svg) {
+    display: block;
+    width: 100%;
+    height: 100%;
+  }
+</style>

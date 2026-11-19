@@ -1,0 +1,48 @@
+---
+interface Props {
+  href?: string;
+  size?: 'small' | 'normal';
+}
+
+const { href, size = 'normal' } = Astro.props;
+---
+{href ? (
+  <a class:list={['tag', 'tag-link', size]} href={href}><slot /></a>
+) : (
+  <span class:list={['tag', size]}><slot /></span>
+)}
+
+<style>
+  .tag {
+    padding: 1px 8px;
+    border: 1px solid var(--tag-border);
+    border-radius: var(--radius-tag);
+    font-family: var(--font-mono);
+    color: var(--text-tag);
+    overflow-wrap: anywhere;
+  }
+
+  .normal {
+    font-size: 13px;
+  }
+
+  .small {
+    font-size: 12px;
+  }
+
+  .tag-link {
+    color: var(--text);
+    text-decoration: underline;
+    text-underline-offset: 3px;
+    text-decoration-color: var(--mark);
+  }
+
+  .tag-link:hover {
+    color: var(--text-hover);
+    text-decoration-color: var(--text-muted);
+  }
+
+  .tag-link:focus-visible {
+    border-radius: var(--radius-tag);
+  }
+</style>
