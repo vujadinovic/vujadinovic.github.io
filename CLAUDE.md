@@ -44,7 +44,7 @@ The look is "Linear + terminal": a dark, quiet, card-based layout with a compute
 | `--display` | `#9AB4DC` | giant page titles and group headings |
 | `--quote-bar` | `#3A3C41` | left bar on lead paragraphs |
 | `--mark` | `#4A4D52` | the `+` crosshair marks |
-| `--accent` | `#F0A43A` | only: key letters in nav chips, the logo cursor, and one highlighted line per illustration. Never for UI text, buttons or backgrounds. |
+| `--accent` | `#64A8FF` | only: key letters in nav chips, the logo cursor, and one highlighted line per illustration. Never for UI text, buttons or backgrounds. |
 
 ### Type
 
@@ -74,7 +74,7 @@ Every post and project has one SVG cover that draws the actual mathematical obje
 
 - transparent background (the panel provides `--media`); viewBox around 480×260 for cards or 720×340 for featured cards
 - strokes `#EDEDEF` at 0.15–0.7 opacity, 1–1.5px wide
-- exactly one highlighted element in `--accent` (`#F0A43A`)
+- exactly one highlighted element in `--accent` (`#64A8FF`)
 - optional math labels in STIX Two Text italic, fill `#DDE5F0` at about 0.5 opacity
 - no titles, no words, no gradients, no shadows
 

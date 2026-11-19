@@ -129,7 +129,7 @@ Pitaj Claude Code, na primer:
 
 > Napravi novu cover ilustraciju za post „Bayesian A/B testing“: dve beta raspodele posteriora koje se preklapaju, sa istaknutom razlikom. Prati pravila za ilustracije iz CLAUDE.md i postojeće fajlove u src/assets/illustrations/. Sačuvaj kao src/assets/illustrations/bayes-ab-posteriors.svg i stavi je u cover posta.
 
-Pravila iz CLAUDE.md važe za svaku ilustraciju: providna pozadina, tanke svetle linije, tačno jedan istaknut element u boji `#F0A43A` i bez reči u slici. Pre objave pogledaj ilustraciju u `npm run dev`.
+Pravila iz CLAUDE.md važe za svaku ilustraciju: providna pozadina, tanke svetle linije, tačno jedan istaknut element u boji `#64A8FF` i bez reči u slici. Pre objave pogledaj ilustraciju u `npm run dev`.
 
 ## Placeholder-i koje treba popuniti
 
