@@ -3,6 +3,7 @@ import { render, type CollectionEntry } from 'astro:content';
 import MetaTable from './MetaTable.astro';
 import MetaRow from './MetaRow.astro';
 import Tag from './Tag.astro';
+import PathLabel from './PathLabel.astro';
 import Illustration from './Illustration.astro';
 
 interface Props {
@@ -34,7 +35,7 @@ const linkLabel = links.length > 0 && links.every((link) => /^https:\/\/github\.
       ))}
       {links.length > 0 && (
         <MetaRow label={linkLabel}>
-          {links.map((link) => <Tag href={link.url}>{link.label}</Tag>)}
+          {links.map((link) => <Tag href={link.url}><PathLabel text={link.label} /></Tag>)}
         </MetaRow>
       )}
     </MetaTable>
@@ -52,19 +53,19 @@ const linkLabel = links.length > 0 && links.every((link) => /^https:\/\/github\.
   .project {
     display: flex;
     flex-wrap: wrap;
-    gap: 32px 72px;
+    gap: 32px 48px;
     align-items: flex-start;
     padding-top: 8px;
   }
 
   .project-meta {
     flex: 1 1 340px;
-    max-width: 440px;
+    max-width: 340px;
     min-width: 0;
   }
 
   .project-main {
-    flex: 999 1 520px;
+    flex: 999 1 480px;
     min-width: 0;
     display: flex;
     flex-direction: column;

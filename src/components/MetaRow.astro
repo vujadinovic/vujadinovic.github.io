@@ -36,4 +36,9 @@ const { label } = Astro.props;
     gap: 6px;
     overflow-wrap: break-word;
   }
+
+  dd > :global(.tag) {
+    max-width: 100%;
+    overflow-wrap: anywhere;
+  }
 </style>

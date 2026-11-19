@@ -1,0 +1,8 @@
+---
+interface Props {
+  text: string;
+}
+
+const parts = Astro.props.text.split('/');
+---
+{parts.map((part, i) => <>{i > 0 && <>/<wbr /></>}{part}</>)}

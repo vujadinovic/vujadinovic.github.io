@@ -131,6 +131,8 @@ Pitaj Claude Code, na primer:
 
 Pravila iz CLAUDE.md važe za svaku ilustraciju: providna pozadina, tanke svetle linije, tačno jedan istaknut element u boji `#64A8FF` i bez reči u slici. Pre objave pogledaj ilustraciju u `npm run dev`.
 
+Ako izmeniš ilustraciju koja je ubačena u tekst posta, a dev server i dalje prikazuje staru, ugasi ga, obriši keš (`rm -rf .astro node_modules/.astro`) i pokreni ponovo. Na GitHub-u se sajt uvek gradi bez keša.
+
 ## Placeholder-i koje treba popuniti
 
 - `[LINKEDIN_URL]` u `src/content/site.yaml`. Dok je placeholder, link na LinkedIn se ne prikazuje. Kad upišeš pravi URL, pojaviće se na „about“ i u futeru.

@@ -3,6 +3,7 @@ import { render } from 'astro:content';
 import 'katex/dist/katex.min.css';
 import '../../styles/article.css';
 import Base from '../../layouts/Base.astro';
+import PathLabel from '../../components/PathLabel.astro';
 import PageHero from '../../components/PageHero.astro';
 import SectionLabel from '../../components/SectionLabel.astro';
 import MetaTable from '../../components/MetaTable.astro';
@@ -43,7 +44,7 @@ const codeLabel = data.code?.replace(/^https?:\/\/(www\.)?github\.com\//, '').re
         <MetaRow label="author">{site.name}</MetaRow>
         <MetaRow label="category"><Tag>{data.category}</Tag></MetaRow>
         {data.tags.length > 0 && <MetaRow label="tags">{data.tags.map((tag) => <Tag>{tag}</Tag>)}</MetaRow>}
-        {data.code && <MetaRow label="code"><Tag href={data.code}>{codeLabel}</Tag></MetaRow>}
+        {data.code && <MetaRow label="code"><Tag href={data.code}><PathLabel text={codeLabel ?? ''} /></Tag></MetaRow>}
       </MetaTable>
       {sections.length > 0 && (
         <nav aria-label="Contents" class="contents">
@@ -122,16 +123,16 @@ const codeLabel = data.code?.replace(/^https?:\/\/(www\.)?github\.com\//, '').re
     .post-columns {
       flex-direction: row;
       align-items: flex-start;
-      gap: 72px;
+      gap: 48px;
     }
 
     .post-side {
       order: 0;
-      flex: 1 1 320px;
+      flex: 0 0 310px;
     }
 
     .post-article {
-      flex: 999 1 560px;
+      flex: 1 1 0;
     }
   }
 
