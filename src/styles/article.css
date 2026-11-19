@@ -1,0 +1,224 @@
+.prose {
+  display: flex;
+  flex-direction: column;
+  gap: 22px;
+  counter-reset: equation;
+}
+
+.prose > * {
+  min-width: 0;
+}
+
+.prose h2 {
+  margin: 24px 0 0;
+  font-size: 32px;
+  line-height: 1.15;
+  font-weight: 500;
+  letter-spacing: -0.03em;
+  color: var(--text);
+  scroll-margin-top: 24px;
+}
+
+.prose h3 {
+  margin: 12px 0 0;
+  font-size: 22px;
+  line-height: 1.25;
+  font-weight: 600;
+  letter-spacing: -0.015em;
+  color: var(--text);
+  scroll-margin-top: 24px;
+}
+
+.prose p,
+.prose ul,
+.prose ol {
+  margin: 0;
+  font-size: 18px;
+  line-height: 1.75;
+  color: var(--text-article);
+  max-width: 68ch;
+}
+
+.prose ul,
+.prose ol {
+  padding-left: 1.4em;
+}
+
+.prose li + li {
+  margin-top: 6px;
+}
+
+.prose li::marker {
+  color: var(--text-muted);
+}
+
+.prose a {
+  color: var(--text);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  text-decoration-color: var(--mark);
+}
+
+.prose a:hover {
+  color: var(--text-hover);
+  text-decoration-color: var(--text-muted);
+}
+
+.prose strong {
+  font-weight: 600;
+  color: var(--text);
+}
+
+.prose blockquote {
+  margin: 0;
+  padding-left: 18px;
+  border-left: 2px solid var(--quote-bar);
+}
+
+.prose blockquote p {
+  font-size: 16px;
+  line-height: 1.65;
+  color: var(--text-body);
+}
+
+.prose hr {
+  width: 100%;
+  margin: 8px 0;
+  border: 0;
+  border-top: 1px solid var(--line-strong);
+}
+
+.prose :not(pre) > code {
+  padding: 1px 5px;
+  border: 1px solid var(--line-soft);
+  border-radius: var(--radius-tag);
+  background: var(--media);
+  color: var(--code-text);
+  font-family: var(--font-mono);
+  font-size: 0.86em;
+}
+
+.prose .katex {
+  color: var(--text);
+  font-size: 1.08em;
+}
+
+.prose .katex-display {
+  counter-increment: equation;
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  margin: 0;
+  padding: 18px 0;
+  overflow-x: auto;
+  overflow-y: hidden;
+}
+
+.prose .katex-display > .katex {
+  flex: 1 1 auto;
+  font-size: 23px;
+  text-align: center;
+}
+
+.prose .katex-display::after {
+  content: '(' counter(equation) ')';
+  flex: 0 0 auto;
+  font-family: var(--font-mono);
+  font-size: 13px;
+  color: var(--text-muted);
+}
+
+.prose .code-frame {
+  margin: 8px 0;
+  border: 1px solid var(--line);
+  border-radius: var(--radius-button);
+  background: var(--media);
+  overflow: hidden;
+}
+
+.prose .code-frame-header {
+  display: flex;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 8px 14px;
+  border-bottom: 1px solid var(--line-soft);
+  font-family: var(--font-mono);
+  font-size: 12px;
+  color: var(--text-muted);
+}
+
+.prose .code-frame pre {
+  margin: 0;
+  padding: 16px 18px;
+  overflow-x: auto;
+  background: var(--media) !important;
+  font-family: var(--font-mono);
+  font-size: 14px;
+  line-height: 1.7;
+  color: var(--code-text);
+}
+
+.prose .code-frame pre:focus-visible {
+  outline-offset: -2px;
+  border-radius: 0;
+}
+
+.prose .code-frame code {
+  font-family: inherit;
+}
+
+.prose .figure {
+  margin: 8px 0;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.prose .figure-media {
+  height: 300px;
+  padding: 10px;
+  background: var(--media);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-card);
+}
+
+.prose .figure-media svg {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
+.prose .figure img {
+  width: 100%;
+  height: auto;
+  border: 1px solid var(--line);
+  border-radius: var(--radius-card);
+}
+
+.prose figcaption {
+  font-family: var(--font-mono);
+  font-size: 13px;
+  line-height: 1.6;
+  color: var(--text-muted);
+}
+
+.prose table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 15px;
+  color: var(--text-article);
+}
+
+.prose th,
+.prose td {
+  padding: 8px 12px 8px 0;
+  border-bottom: 1px solid var(--line-soft);
+  text-align: left;
+}
+
+.prose th {
+  font-family: var(--font-mono);
+  font-size: 13px;
+  font-weight: 400;
+  color: var(--text-muted);
+}

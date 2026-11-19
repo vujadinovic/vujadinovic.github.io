@@ -1,0 +1,198 @@
+---
+import { render } from 'astro:content';
+import 'katex/dist/katex.min.css';
+import '../../styles/article.css';
+import Base from '../../layouts/Base.astro';
+import PageHero from '../../components/PageHero.astro';
+import SectionLabel from '../../components/SectionLabel.astro';
+import MetaTable from '../../components/MetaTable.astro';
+import MetaRow from '../../components/MetaRow.astro';
+import Tag from '../../components/Tag.astro';
+import { getSite } from '../../lib/site';
+import { getPosts, isoDate, postUrl, readingTime, type Post } from '../../lib/posts';
+
+export async function getStaticPaths() {
+  const posts = await getPosts();
+  return posts.map((post, index) => ({
+    params: { slug: post.id },
+    props: { post, newer: posts[index - 1], older: posts[index + 1] },
+  }));
+}
+
+interface Props {
+  post: Post;
+  newer?: Post;
+  older?: Post;
+}
+
+const { post, newer, older } = Astro.props;
+const site = await getSite();
+const { Content, headings } = await render(post);
+const sections = headings.filter((heading) => heading.depth === 2);
+const data = post.data;
+const codeLabel = data.code?.replace(/^https?:\/\/(www\.)?github\.com\//, '').replace(/\/$/, '');
+---
+<Base title={data.title} description={data.description} type="article">
+  <a class="back" href="/blog/">cd ../blog</a>
+  <PageHero title={data.title.toLowerCase()} subtitle={data.description} size="post" />
+  <div class="post-columns">
+    <aside class="post-side">
+      <MetaTable>
+        <MetaRow label="date"><time datetime={isoDate(data.date)}>{isoDate(data.date)}</time></MetaRow>
+        <MetaRow label="reading time">{readingTime(post.body)} min read</MetaRow>
+        <MetaRow label="author">{site.name}</MetaRow>
+        <MetaRow label="category"><Tag>{data.category}</Tag></MetaRow>
+        {data.tags.length > 0 && <MetaRow label="tags">{data.tags.map((tag) => <Tag>{tag}</Tag>)}</MetaRow>}
+        {data.code && <MetaRow label="code"><Tag href={data.code}>{codeLabel}</Tag></MetaRow>}
+      </MetaTable>
+      {sections.length > 0 && (
+        <nav aria-label="Contents" class="contents">
+          <SectionLabel label="contents" />
+          <ol>
+            {sections.map((heading, index) => (
+              <li><a href={`#${heading.slug}`}>{index + 1}. {heading.text.toLowerCase()}</a></li>
+            ))}
+          </ol>
+        </nav>
+      )}
+    </aside>
+    <article class="post-article">
+      <SectionLabel label="article" />
+      <p class="lead post-lead">{data.lead}</p>
+      <div class="prose">
+        <Content />
+      </div>
+      {(older || newer) && (
+        <nav class="pager" aria-label="More posts">
+          {older && (
+            <a class="pager-link prev" href={postUrl(older)} rel="prev">
+              <span>previous</span>
+              <span class="pager-title">{older.data.title}</span>
+            </a>
+          )}
+          {newer && (
+            <a class="pager-link next" href={postUrl(newer)} rel="next">
+              <span>next</span>
+              <span class="pager-title">{newer.data.title}</span>
+            </a>
+          )}
+        </nav>
+      )}
+    </article>
+  </div>
+</Base>
+
+<style>
+  .back {
+    display: inline-flex;
+    align-items: center;
+    min-height: 44px;
+    font-family: var(--font-mono);
+    font-size: 13px;
+    color: var(--text-muted);
+  }
+
+  .back:hover {
+    color: var(--text);
+  }
+
+  .post-columns {
+    display: flex;
+    flex-direction: column;
+    gap: 48px;
+  }
+
+  .post-side {
+    order: 1;
+    min-width: 0;
+    max-width: 420px;
+    display: flex;
+    flex-direction: column;
+    gap: 40px;
+  }
+
+  .post-article {
+    min-width: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 22px;
+  }
+
+  @media (min-width: 1024px) {
+    .post-columns {
+      flex-direction: row;
+      align-items: flex-start;
+      gap: 72px;
+    }
+
+    .post-side {
+      order: 0;
+      flex: 1 1 320px;
+    }
+
+    .post-article {
+      flex: 999 1 560px;
+    }
+  }
+
+  .contents ol {
+    list-style: none;
+    margin: 0;
+    padding: 6px 0 0;
+  }
+
+  .contents a {
+    display: block;
+    padding: 8px 0;
+    color: var(--text-muted);
+    font-family: var(--font-mono);
+    font-size: 13px;
+  }
+
+  .contents a:hover {
+    color: var(--text);
+  }
+
+  .post-lead {
+    margin-top: 6px;
+    font-size: 21px;
+    line-height: 1.55;
+    max-width: 62ch;
+  }
+
+  .pager {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    gap: 16px;
+    margin-top: 40px;
+    padding-top: 20px;
+    border-top: 1px solid var(--line-strong);
+    font-family: var(--font-mono);
+    font-size: 13px;
+  }
+
+  .pager-link {
+    display: inline-flex;
+    flex-direction: column;
+    gap: 6px;
+    min-height: 44px;
+    color: var(--text-muted);
+  }
+
+  .pager-link.next {
+    margin-left: auto;
+    align-items: flex-end;
+    text-align: right;
+  }
+
+  .pager-title {
+    font-family: var(--font-sans);
+    font-size: 17px;
+    color: var(--text);
+  }
+
+  .pager-link:hover .pager-title {
+    color: var(--text-hover);
+  }
+</style>
