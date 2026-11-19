@@ -1,0 +1,117 @@
+---
+import { render, type CollectionEntry } from 'astro:content';
+import MetaTable from './MetaTable.astro';
+import MetaRow from './MetaRow.astro';
+import Tag from './Tag.astro';
+import Illustration from './Illustration.astro';
+
+interface Props {
+  project: CollectionEntry<'projects'>;
+}
+
+const { project } = Astro.props;
+const { Content } = await render(project);
+const { title, cover, metadata, links } = project.data;
+const rows = Object.entries(metadata).map(([key, value]) => ({ label: key.replace(/_/g, ' '), key, value }));
+const linkLabel = links.length > 0 && links.every((link) => /^https:\/\/github\.com\//.test(link.url)) ? 'code' : 'links';
+---
+<article class="project">
+  <div class="project-meta">
+    <MetaTable>
+      {rows.map(({ label, key, value }) => (
+        <MetaRow label={label}>
+          {Array.isArray(value) ? (
+            value.map((item) => <Tag>{item}</Tag>)
+          ) : key === 'status' ? (
+            <span class="status">
+              <span class:list={['dot', { filled: value === 'finished' }]} aria-hidden="true" />
+              {value}
+            </span>
+          ) : (
+            value
+          )}
+        </MetaRow>
+      ))}
+      {links.length > 0 && (
+        <MetaRow label={linkLabel}>
+          {links.map((link) => <Tag href={link.url}>{link.label}</Tag>)}
+        </MetaRow>
+      )}
+    </MetaTable>
+  </div>
+  <div class="project-main">
+    <Illustration name={cover} height={260} />
+    <h3>{title}</h3>
+    <div class="project-body">
+      <Content />
+    </div>
+  </div>
+</article>
+
+<style>
+  .project {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 32px 72px;
+    align-items: flex-start;
+    padding-top: 8px;
+  }
+
+  .project-meta {
+    flex: 1 1 340px;
+    max-width: 440px;
+    min-width: 0;
+  }
+
+  .project-main {
+    flex: 999 1 520px;
+    min-width: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+  }
+
+  h3 {
+    font-size: 26px;
+    line-height: 1.25;
+    font-weight: 600;
+    letter-spacing: -0.015em;
+    color: var(--text);
+  }
+
+  .project-body {
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+  }
+
+  .project-body :global(p) {
+    font-size: 17px;
+    line-height: 1.6;
+    color: var(--text-body);
+    max-width: 62ch;
+  }
+
+  .project-body :global(a) {
+    text-decoration: underline;
+    text-underline-offset: 3px;
+    text-decoration-color: var(--mark);
+  }
+
+  .status {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .dot {
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+    border: 1.5px solid var(--text);
+  }
+
+  .dot.filled {
+    background: var(--text);
+  }
+</style>

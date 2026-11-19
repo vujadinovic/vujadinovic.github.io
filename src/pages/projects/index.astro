@@ -1,0 +1,45 @@
+---
+import { getCollection, getEntry } from 'astro:content';
+import Base from '../../layouts/Base.astro';
+import PageHero from '../../components/PageHero.astro';
+import ProjectItem from '../../components/ProjectItem.astro';
+import { getSite } from '../../lib/site';
+
+const site = await getSite();
+const page = await getEntry('pages', 'projects');
+if (!page) throw new Error('src/content/pages/projects.md is missing');
+
+const projects = (await getCollection('projects', ({ data }) => !data.hidden && (!data.talk || site.show_talks))).sort(
+  (a, b) => a.data.order - b.data.order,
+);
+
+const groups = (['research', 'projects'] as const)
+  .map((name) => ({ name, items: projects.filter((project) => project.data.group === name) }))
+  .filter((group) => group.items.length > 0);
+---
+<Base title="Projects & research" description={page.data.subtitle}>
+  <PageHero title={page.data.title} subtitle={page.data.subtitle} />
+  {groups.map((group) => (
+    <section class="group">
+      <h2>{group.name}</h2>
+      {group.items.map((project) => <ProjectItem project={project} />)}
+    </section>
+  ))}
+</Base>
+
+<style>
+  .group {
+    display: flex;
+    flex-direction: column;
+    gap: 56px;
+    margin-bottom: 88px;
+  }
+
+  h2 {
+    font-size: 44px;
+    line-height: 1;
+    font-weight: 500;
+    letter-spacing: -0.035em;
+    color: var(--display);
+  }
+</style>
