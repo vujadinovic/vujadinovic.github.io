@@ -31,19 +31,17 @@ const section = path.startsWith('/projects') ? 'projects' : path.startsWith('/bl
   }
 
   .nav {
-    display: flex;
+    display: grid;
+    grid-template-columns: 1fr auto 1fr;
     align-items: center;
     gap: 8px;
   }
 
   .nav-logo {
-    flex: 1 1 0;
-    min-width: 0;
     display: flex;
   }
 
   .nav-pages {
-    flex: 0 1 auto;
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
@@ -51,17 +49,13 @@ const section = path.startsWith('/projects') ? 'projects' : path.startsWith('/bl
   }
 
   .nav-external {
-    flex: 1 1 0;
-    min-width: 0;
     display: flex;
-    flex-wrap: wrap;
     justify-content: flex-end;
     gap: 4px;
   }
 
   @media (max-width: 640px) {
     .nav {
-      display: grid;
       grid-template-columns: auto 1fr;
       grid-template-areas:
         'logo external'
