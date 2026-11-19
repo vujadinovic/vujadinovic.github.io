@@ -5,8 +5,8 @@ order: 1
 cover: insurance-poisson-gamma.svg
 hidden: false
 metadata:
-  type: team project, now a personal rework
-  date: 2024, rework 2026
+  type: now a personal rework
+  date: 2025, rework 2026
   status: in progress
   stack: [R, Python, GLM, XGBoost, FastAPI, Docker]
 links:

@@ -10,8 +10,7 @@ metadata:
   date: Aug 2026 – present
   status: in progress
   topics: [KAN, interpretability, PyTorch]
-  target: Artificial Intelligence and Law
 links: []
 ---
 
-Research on the black-box problem in formal decision-making, in a team with lawyers. I built a Python tool that computes neural-network heatmaps and metrics on them, reproducing results from a paper, and I research how Kolmogorov–Arnold networks compare with MLPs in performance and interpretability. The work is aimed at a paper for the journal.
+Research on the black-box problem in formal decision-making. Built a Python tool that computes neural-network heatmaps and metrics on them, reproducing results from a paper, and researched how Kolmogorov–Arnold networks compare with MLPs in performance and interpretability. 
