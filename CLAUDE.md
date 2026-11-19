@@ -51,7 +51,7 @@ The look is "Linear + terminal": a dark, quiet, card-based layout with a compute
 - Schibsted Grotesk (400, 500, 600, 700): body, titles, everything that is prose.
 - IBM Plex Mono (400, 500): nav chips, `/ labels`, metadata tables, tags, dates, code, figure captions, footer.
 - STIX Two Text italic: math labels inside illustrations. Article math is KaTeX.
-- Page titles: weight 500, `clamp(64px, 10.5vw, 164px)`, line-height 0.95, letter-spacing -0.05em, color `--display`, max-width 11ch. Post titles use `clamp(52px, 8vw, 124px)` and max-width 16ch.
+- Page titles: weight 500, `clamp(51px, 8.4vw, 131px)`, line-height 0.95, letter-spacing -0.05em, color `--display`, max-width 11ch. Post titles use `clamp(42px, 6.4vw, 99px)` and max-width 16ch.
 
 ### Casing
 
