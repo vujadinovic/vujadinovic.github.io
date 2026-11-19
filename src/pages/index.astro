@@ -1,7 +1,13 @@
+---
+import { getCollection } from 'astro:content';
+const counts = await Promise.all(
+  (['site', 'about', 'pages', 'projects', 'blog'] as const).map(async (c) => `${c}: ${(await getCollection(c)).length}`),
+);
+---
 <html lang="en">
   <head>
     <meta charset="utf-8" />
     <title>Stefan Vujadinović</title>
   </head>
-  <body></body>
+  <body><pre>{counts.join('\n')}</pre></body>
 </html>
